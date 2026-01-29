@@ -29,6 +29,7 @@ namespace WebBrowser
                     if (url.Contains(".")) webWindow.CoreWebView2.Navigate("https://" + url);
                     else webWindow.CoreWebView2.Navigate("https://www.google.com/search?q=" + url);
                 }
+                linkComboBox.Items.Add(url);
             }
         }
 
@@ -49,7 +50,7 @@ namespace WebBrowser
 
         private void WebBrowser_Resize(object sender, EventArgs e)
         {
-            webWindow.Size = this.ClientSize - new System.Drawing.Size(webControls.Location);
+            webWindow.Size = this.ClientSize - new System.Drawing.Size(webControls.Location.X + 20, webControls.Location.Y + 40);
             searchButton.Left = this.ClientSize.Width - searchButton.Width;
             linkComboBox.Width = searchButton.Left - linkComboBox.Left;
         }
