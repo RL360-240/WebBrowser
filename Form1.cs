@@ -50,8 +50,8 @@ namespace WebBrowser
 
         private void WebBrowser_Resize(object sender, EventArgs e)
         {
-            webWindow.Size = this.ClientSize - new System.Drawing.Size(webControls.Location.X + 20, webControls.Location.Y + 40);
-            searchButton.Left = this.ClientSize.Width - searchButton.Width;
+            webWindow.Size = this.ClientSize - new System.Drawing.Size(webControls.Location.X + 20, webControls.Location.Y + 50);
+            searchButton.Left = this.ClientSize.Width - searchButton.Width - 10;
             linkComboBox.Width = searchButton.Left - linkComboBox.Left;
         }
     }
