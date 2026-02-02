@@ -47,7 +47,7 @@
             this.navegarToolStripMenuItem});
             this.webControls.Location = new System.Drawing.Point(0, 0);
             this.webControls.Name = "webControls";
-            this.webControls.Size = new System.Drawing.Size(1262, 30);
+            this.webControls.Size = new System.Drawing.Size(1262, 27);
             this.webControls.TabIndex = 0;
             this.webControls.Text = "menuStrip1";
             // 
@@ -88,9 +88,9 @@
             this.linkComboBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.linkComboBox.FormattingEnabled = true;
             this.linkComboBox.Items.AddRange(new object[] {
-            "https://google.com",
-            "https://youtube.com",
-            "https://duckduckgo.com"});
+            "https://google.com/",
+            "https://youtube.com/",
+            "https://duckduckgo.com/"});
             this.linkComboBox.Location = new System.Drawing.Point(12, 27);
             this.linkComboBox.Name = "linkComboBox";
             this.linkComboBox.Size = new System.Drawing.Size(1156, 23);
@@ -114,7 +114,7 @@
             this.webWindow.Location = new System.Drawing.Point(12, 57);
             this.webWindow.Name = "webWindow";
             this.webWindow.Size = new System.Drawing.Size(1235, 604);
-            this.webWindow.Source = new System.Uri("https://www.google.com", System.UriKind.Absolute);
+            this.webWindow.Source = new System.Uri("https://www.duckduckgo.com", System.UriKind.Absolute);
             this.webWindow.TabIndex = 7;
             this.webWindow.ZoomFactor = 1D;
             // 

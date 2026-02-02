@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Microsoft.Web.WebView2.Core;
-
+using System.IO;
 namespace WebBrowser
 {
     public partial class WebBrowser : Form
@@ -16,6 +16,7 @@ namespace WebBrowser
         public WebBrowser()
         {
             InitializeComponent();
+            loadHistory();
         }
 
         private void searchButton_Click(object sender, EventArgs e)
@@ -27,15 +28,19 @@ namespace WebBrowser
                 else
                 {
                     if (url.Contains(".")) webWindow.CoreWebView2.Navigate("https://" + url);
-                    else webWindow.CoreWebView2.Navigate("https://www.google.com/search?q=" + url);
+                    else webWindow.CoreWebView2.Navigate("https://duckduckgo.com/?ia=web&origin=funnel_home_searchresults&t=h_&q=" + url + "&chip-select=search");
                 }
-                linkComboBox.Items.Add(url);
+                if (!linkComboBox.Items.Contains(url))
+                {
+                    linkComboBox.Items.Add(url);
+                    saveToHistory(url);
+                }
             }
         }
 
         private void inicioToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if(webWindow != null && webWindow.CoreWebView2 != null) webWindow.CoreWebView2.Navigate("https://www.google.com");
+            if(webWindow != null && webWindow.CoreWebView2 != null) webWindow.CoreWebView2.Navigate("https://www.duckduckgo.com");
         }
 
         private void atrásToolStripMenuItem_Click(object sender, EventArgs e)
@@ -53,6 +58,32 @@ namespace WebBrowser
             webWindow.Size = this.ClientSize - new System.Drawing.Size(webControls.Location.X + 20, webControls.Location.Y + 50);
             searchButton.Left = this.ClientSize.Width - searchButton.Width - 10;
             linkComboBox.Width = searchButton.Left - linkComboBox.Left;
+        }
+
+        private void saveToHistory(string savedString) {
+            FileStream stream = new FileStream("C:\\Users\\user\\Desktop\\ProgamIII\\WebBrowser\\History.txt", FileMode.Append, FileAccess.Write);
+            StreamWriter writer = new StreamWriter(stream);
+            writer.WriteLine(savedString);
+            writer.Close();
+        }
+
+        private void loadHistory() 
+        {
+            //OpenFileDialog openFileDialog1 = new OpenFileDialog();
+            //openFileDialog1.InitialDirectory = "C:\\Users\\user\\Desktop\\ProgamIII\\WebBrowser";
+            //openFileDialog1.Filter = "txt files (*.txt)|*.txt|All files (*.*)|*.*";
+
+            //if (openFileDialog1.ShowDialog() == DialogResult.OK)
+            //{
+                FileStream stream = new FileStream("C:\\Users\\user\\Desktop\\ProgamIII\\WebBrowser\\History.txt", FileMode.Open, FileAccess.Read);
+                StreamReader reader = new StreamReader(stream);
+
+                while (reader.Peek() > -1)
+                {
+                    linkComboBox.Items.Add(reader.ReadLine());
+                }
+                reader.Close();
+            //}
         }
     }
 }
