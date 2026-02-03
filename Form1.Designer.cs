@@ -33,9 +33,11 @@
             this.inicioToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.atrásToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.adelanteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.historialToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.linkComboBox = new System.Windows.Forms.ComboBox();
             this.searchButton = new System.Windows.Forms.Button();
             this.webWindow = new Microsoft.Web.WebView2.WinForms.WebView2();
+            this.searchHistoryTxt = new System.Windows.Forms.TextBox();
             this.webControls.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.webWindow)).BeginInit();
             this.SuspendLayout();
@@ -56,7 +58,8 @@
             this.navegarToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.inicioToolStripMenuItem,
             this.atrásToolStripMenuItem,
-            this.adelanteToolStripMenuItem});
+            this.adelanteToolStripMenuItem,
+            this.historialToolStripMenuItem});
             this.navegarToolStripMenuItem.Name = "navegarToolStripMenuItem";
             this.navegarToolStripMenuItem.Size = new System.Drawing.Size(83, 23);
             this.navegarToolStripMenuItem.Text = "Navegar";
@@ -64,23 +67,30 @@
             // inicioToolStripMenuItem
             // 
             this.inicioToolStripMenuItem.Name = "inicioToolStripMenuItem";
-            this.inicioToolStripMenuItem.Size = new System.Drawing.Size(154, 26);
+            this.inicioToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
             this.inicioToolStripMenuItem.Text = "Inicio";
             this.inicioToolStripMenuItem.Click += new System.EventHandler(this.inicioToolStripMenuItem_Click);
             // 
             // atrásToolStripMenuItem
             // 
             this.atrásToolStripMenuItem.Name = "atrásToolStripMenuItem";
-            this.atrásToolStripMenuItem.Size = new System.Drawing.Size(154, 26);
+            this.atrásToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
             this.atrásToolStripMenuItem.Text = "Atrás";
             this.atrásToolStripMenuItem.Click += new System.EventHandler(this.atrásToolStripMenuItem_Click);
             // 
             // adelanteToolStripMenuItem
             // 
             this.adelanteToolStripMenuItem.Name = "adelanteToolStripMenuItem";
-            this.adelanteToolStripMenuItem.Size = new System.Drawing.Size(154, 26);
+            this.adelanteToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
             this.adelanteToolStripMenuItem.Text = "Adelante";
             this.adelanteToolStripMenuItem.Click += new System.EventHandler(this.adelanteToolStripMenuItem_Click);
+            // 
+            // historialToolStripMenuItem
+            // 
+            this.historialToolStripMenuItem.Name = "historialToolStripMenuItem";
+            this.historialToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.historialToolStripMenuItem.Text = "Historial";
+            this.historialToolStripMenuItem.Click += new System.EventHandler(this.historialToolStripMenuItem_Click);
             // 
             // linkComboBox
             // 
@@ -118,11 +128,20 @@
             this.webWindow.TabIndex = 7;
             this.webWindow.ZoomFactor = 1D;
             // 
+            // searchHistoryTxt
+            // 
+            this.searchHistoryTxt.Location = new System.Drawing.Point(12, 27);
+            this.searchHistoryTxt.Multiline = true;
+            this.searchHistoryTxt.Name = "searchHistoryTxt";
+            this.searchHistoryTxt.Size = new System.Drawing.Size(399, 490);
+            this.searchHistoryTxt.TabIndex = 8;
+            // 
             // WebBrowser
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1262, 673);
+            this.Controls.Add(this.searchHistoryTxt);
             this.Controls.Add(this.webWindow);
             this.Controls.Add(this.linkComboBox);
             this.Controls.Add(this.searchButton);
@@ -148,6 +167,8 @@
         private System.Windows.Forms.ToolStripMenuItem atrásToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem adelanteToolStripMenuItem;
         private Microsoft.Web.WebView2.WinForms.WebView2 webWindow;
+        private System.Windows.Forms.ToolStripMenuItem historialToolStripMenuItem;
+        private System.Windows.Forms.TextBox searchHistoryTxt;
     }
 }
 

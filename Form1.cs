@@ -17,6 +17,7 @@ namespace WebBrowser
         {
             InitializeComponent();
             loadHistory();
+            searchHistoryTxt.Hide();
         }
 
         private void searchButton_Click(object sender, EventArgs e)
@@ -40,7 +41,11 @@ namespace WebBrowser
 
         private void inicioToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if(webWindow != null && webWindow.CoreWebView2 != null) webWindow.CoreWebView2.Navigate("https://www.duckduckgo.com");
+            webWindow.Show();
+            searchButton.Show();
+            linkComboBox.Show();
+
+            searchHistoryTxt.Hide();
         }
 
         private void atrásToolStripMenuItem_Click(object sender, EventArgs e)
@@ -84,6 +89,24 @@ namespace WebBrowser
                 }
                 reader.Close();
             //}
+        }
+
+        private void historialToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            webWindow.Hide();
+            searchButton.Hide();
+            linkComboBox.Hide();
+
+            searchHistoryTxt.Show();
+
+            FileStream stream = new FileStream("C:\\Users\\user\\Desktop\\ProgamIII\\WebBrowser\\History.txt", FileMode.Open, FileAccess.Read);
+            StreamReader reader = new StreamReader(stream);
+
+            while (reader.Peek() > -1)
+            {
+                searchHistoryTxt.Text += reader.ReadLine() + "\n";
+            }
+            reader.Close();
         }
     }
 }
