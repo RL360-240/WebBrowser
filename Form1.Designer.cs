@@ -37,7 +37,7 @@
             this.linkComboBox = new System.Windows.Forms.ComboBox();
             this.searchButton = new System.Windows.Forms.Button();
             this.webWindow = new Microsoft.Web.WebView2.WinForms.WebView2();
-            this.searchHistoryTxt = new System.Windows.Forms.TextBox();
+            this.searchHistoryListBx = new System.Windows.Forms.ListBox();
             this.webControls.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.webWindow)).BeginInit();
             this.SuspendLayout();
@@ -67,40 +67,36 @@
             // inicioToolStripMenuItem
             // 
             this.inicioToolStripMenuItem.Name = "inicioToolStripMenuItem";
-            this.inicioToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.inicioToolStripMenuItem.Size = new System.Drawing.Size(154, 26);
             this.inicioToolStripMenuItem.Text = "Inicio";
             this.inicioToolStripMenuItem.Click += new System.EventHandler(this.inicioToolStripMenuItem_Click);
             // 
             // atrásToolStripMenuItem
             // 
             this.atrásToolStripMenuItem.Name = "atrásToolStripMenuItem";
-            this.atrásToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.atrásToolStripMenuItem.Size = new System.Drawing.Size(154, 26);
             this.atrásToolStripMenuItem.Text = "Atrás";
             this.atrásToolStripMenuItem.Click += new System.EventHandler(this.atrásToolStripMenuItem_Click);
             // 
             // adelanteToolStripMenuItem
             // 
             this.adelanteToolStripMenuItem.Name = "adelanteToolStripMenuItem";
-            this.adelanteToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.adelanteToolStripMenuItem.Size = new System.Drawing.Size(154, 26);
             this.adelanteToolStripMenuItem.Text = "Adelante";
             this.adelanteToolStripMenuItem.Click += new System.EventHandler(this.adelanteToolStripMenuItem_Click);
             // 
             // historialToolStripMenuItem
             // 
             this.historialToolStripMenuItem.Name = "historialToolStripMenuItem";
-            this.historialToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.historialToolStripMenuItem.Size = new System.Drawing.Size(154, 26);
             this.historialToolStripMenuItem.Text = "Historial";
             this.historialToolStripMenuItem.Click += new System.EventHandler(this.historialToolStripMenuItem_Click);
             // 
             // linkComboBox
             // 
-            this.linkComboBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
+            this.linkComboBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
             this.linkComboBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.linkComboBox.FormattingEnabled = true;
-            this.linkComboBox.Items.AddRange(new object[] {
-            "https://google.com/",
-            "https://youtube.com/",
-            "https://duckduckgo.com/"});
             this.linkComboBox.Location = new System.Drawing.Point(12, 27);
             this.linkComboBox.Name = "linkComboBox";
             this.linkComboBox.Size = new System.Drawing.Size(1156, 23);
@@ -128,20 +124,21 @@
             this.webWindow.TabIndex = 7;
             this.webWindow.ZoomFactor = 1D;
             // 
-            // searchHistoryTxt
+            // searchHistoryListBx
             // 
-            this.searchHistoryTxt.Location = new System.Drawing.Point(12, 27);
-            this.searchHistoryTxt.Multiline = true;
-            this.searchHistoryTxt.Name = "searchHistoryTxt";
-            this.searchHistoryTxt.Size = new System.Drawing.Size(399, 490);
-            this.searchHistoryTxt.TabIndex = 8;
+            this.searchHistoryListBx.FormattingEnabled = true;
+            this.searchHistoryListBx.ItemHeight = 15;
+            this.searchHistoryListBx.Location = new System.Drawing.Point(12, 30);
+            this.searchHistoryListBx.Name = "searchHistoryListBx";
+            this.searchHistoryListBx.Size = new System.Drawing.Size(274, 349);
+            this.searchHistoryListBx.TabIndex = 9;
             // 
             // WebBrowser
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1262, 673);
-            this.Controls.Add(this.searchHistoryTxt);
+            this.Controls.Add(this.searchHistoryListBx);
             this.Controls.Add(this.webWindow);
             this.Controls.Add(this.linkComboBox);
             this.Controls.Add(this.searchButton);
@@ -168,7 +165,7 @@
         private System.Windows.Forms.ToolStripMenuItem adelanteToolStripMenuItem;
         private Microsoft.Web.WebView2.WinForms.WebView2 webWindow;
         private System.Windows.Forms.ToolStripMenuItem historialToolStripMenuItem;
-        private System.Windows.Forms.TextBox searchHistoryTxt;
+        private System.Windows.Forms.ListBox searchHistoryListBx;
     }
 }
 

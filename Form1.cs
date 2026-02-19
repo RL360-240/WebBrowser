@@ -9,15 +9,17 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using Microsoft.Web.WebView2.Core;
 using System.IO;
+using System.Security.Policy;
 namespace WebBrowser
 {
     public partial class WebBrowser : Form
     {
+        List<Sites> siteHistory = new List<Sites>();
         public WebBrowser()
         {
             InitializeComponent();
             loadHistory();
-            searchHistoryTxt.Hide();
+            searchHistoryListBx.Hide();
         }
 
         private void searchButton_Click(object sender, EventArgs e)
@@ -25,18 +27,27 @@ namespace WebBrowser
             string url = linkComboBox.Text;
             if (webWindow != null && webWindow.CoreWebView2 != null)
             {
-                if (url.StartsWith("https://") || url.StartsWith("http://")) webWindow.CoreWebView2.Navigate(url);
-                else
+                if (!(url.StartsWith("https://") || url.StartsWith("http://")))
                 {
-                    if (url.Contains(".")) webWindow.CoreWebView2.Navigate("https://" + url);
-                    else webWindow.CoreWebView2.Navigate("https://duckduckgo.com/?ia=web&origin=funnel_home_searchresults&t=h_&q=" + url + "&chip-select=search");
+                    if (url.Contains(".")) url = "https://" + url;
+                    else url = "https://duckduckgo.com/?ia=web&origin=funnel_home_searchresults&t=h_&q=" + url + "&chip-select=search";
                 }
-                if (!linkComboBox.Items.Contains(url))
+                webWindow.CoreWebView2.Navigate(url);
+
+                if (!siteHistory.Exists(u => u.Url.Equals(url)))
                 {
-                    linkComboBox.Items.Add(url);
-                    saveToHistory(url);
+                    Sites site = new Sites(url, 1, DateTime.Now);
+                    siteHistory.Add(site);
+                }
+                else 
+                {
+                    Sites preExistingSiteLog = siteHistory.Find(u => u.Url.Equals(url));
+                    preExistingSiteLog.CallAmount += 1;
+                    preExistingSiteLog.LastVisit = DateTime.Now;
                 }
             }
+            saveToHistory();
+            updateAddressBar();
         }
 
         private void inicioToolStripMenuItem_Click(object sender, EventArgs e)
@@ -45,7 +56,7 @@ namespace WebBrowser
             searchButton.Show();
             linkComboBox.Show();
 
-            searchHistoryTxt.Hide();
+            searchHistoryListBx.Hide();
         }
 
         private void atrásToolStripMenuItem_Click(object sender, EventArgs e)
@@ -65,30 +76,52 @@ namespace WebBrowser
             linkComboBox.Width = searchButton.Left - linkComboBox.Left;
         }
 
-        private void saveToHistory(string savedString) {
-            FileStream stream = new FileStream("C:\\Users\\user\\Desktop\\ProgamIII\\WebBrowser\\History.txt", FileMode.Append, FileAccess.Write);
+        private void saveToHistory() {
+            FileStream stream = new FileStream("C:\\Users\\user\\Desktop\\ProgamIII\\WebBrowser\\History.txt", FileMode.Open, FileAccess.Write);
             StreamWriter writer = new StreamWriter(stream);
-            writer.WriteLine(savedString);
+            foreach(Sites s in siteHistory)
+            {
+                string siteSaveformat = String.Format("{0};{1};{2}",
+                    s.Url,
+                    Convert.ToString(s.CallAmount),
+                    Convert.ToString(s.LastVisit));
+
+                writer.WriteLine(siteSaveformat);
+            }
             writer.Close();
+        }
+
+        private void updateAddressBar() 
+        {
+            siteHistory.Sort((s1, s2) => s2.LastVisit.CompareTo(s1.LastVisit));
+
+            linkComboBox.DataSource = null;
+            linkComboBox.ValueMember = null;
+
+            linkComboBox.DataSource = siteHistory;
+            linkComboBox.ValueMember = "Url";
+
+            linkComboBox.SelectedIndex = -1;
         }
 
         private void loadHistory() 
         {
-            //OpenFileDialog openFileDialog1 = new OpenFileDialog();
-            //openFileDialog1.InitialDirectory = "C:\\Users\\user\\Desktop\\ProgamIII\\WebBrowser";
-            //openFileDialog1.Filter = "txt files (*.txt)|*.txt|All files (*.*)|*.*";
+            FileStream stream = new FileStream("C:\\Users\\user\\Desktop\\ProgamIII\\WebBrowser\\History.txt", FileMode.Open, FileAccess.Read);
+            StreamReader reader = new StreamReader(stream);
 
-            //if (openFileDialog1.ShowDialog() == DialogResult.OK)
-            //{
-                FileStream stream = new FileStream("C:\\Users\\user\\Desktop\\ProgamIII\\WebBrowser\\History.txt", FileMode.Open, FileAccess.Read);
-                StreamReader reader = new StreamReader(stream);
+            while (reader.Peek() > -1)
+            {
+                string[] line = reader.ReadLine().Split(';');
+                Sites site = new Sites(
+                    line[0],
+                    Convert.ToInt32(line[1]),
+                    Convert.ToDateTime(line[2])
+                    );
 
-                while (reader.Peek() > -1)
-                {
-                    linkComboBox.Items.Add(reader.ReadLine());
-                }
-                reader.Close();
-            //}
+                siteHistory.Add(site);
+            }
+            reader.Close();
+            updateAddressBar();
         }
 
         private void historialToolStripMenuItem_Click(object sender, EventArgs e)
@@ -97,16 +130,13 @@ namespace WebBrowser
             searchButton.Hide();
             linkComboBox.Hide();
 
-            searchHistoryTxt.Show();
+            searchHistoryListBx.DataSource = null;
+            searchHistoryListBx.ValueMember = null;
 
-            FileStream stream = new FileStream("C:\\Users\\user\\Desktop\\ProgamIII\\WebBrowser\\History.txt", FileMode.Open, FileAccess.Read);
-            StreamReader reader = new StreamReader(stream);
+            searchHistoryListBx.DataSource = siteHistory;
+            searchHistoryListBx.ValueMember = "Url";
 
-            while (reader.Peek() > -1)
-            {
-                searchHistoryTxt.Text += reader.ReadLine() + "\n";
-            }
-            reader.Close();
+            searchHistoryListBx.Show();
         }
     }
 }
