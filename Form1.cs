@@ -20,6 +20,7 @@ namespace WebBrowser
             InitializeComponent();
             loadHistory();
             searchHistoryListBx.Hide();
+            deleteFromHistory.Hide();
         }
 
         private void searchButton_Click(object sender, EventArgs e)
@@ -47,7 +48,7 @@ namespace WebBrowser
                 }
             }
             saveToHistory();
-            updateAddressBar();
+            updateHistoryData();
         }
 
         private void inicioToolStripMenuItem_Click(object sender, EventArgs e)
@@ -57,6 +58,7 @@ namespace WebBrowser
             linkComboBox.Show();
 
             searchHistoryListBx.Hide();
+            deleteFromHistory.Hide();
         }
 
         private void atrásToolStripMenuItem_Click(object sender, EventArgs e)
@@ -77,8 +79,12 @@ namespace WebBrowser
         }
 
         private void saveToHistory() {
-            FileStream stream = new FileStream("C:\\Users\\user\\Desktop\\ProgamIII\\WebBrowser\\History.txt", FileMode.Open, FileAccess.Write);
+            FileStream stream = new FileStream("C:\\Users\\user\\Desktop\\ProgamIII\\WebBrowser\\History.txt", FileMode.Create
+                , FileAccess.Write);
             StreamWriter writer = new StreamWriter(stream);
+
+
+
             foreach(Sites s in siteHistory)
             {
                 string siteSaveformat = String.Format("{0};{1};{2}",
@@ -91,17 +97,24 @@ namespace WebBrowser
             writer.Close();
         }
 
-        private void updateAddressBar() 
+        private void updateHistoryData() 
         {
             siteHistory.Sort((s1, s2) => s2.LastVisit.CompareTo(s1.LastVisit));
 
             linkComboBox.DataSource = null;
             linkComboBox.ValueMember = null;
+            searchHistoryListBx.DataSource = null;
+            searchHistoryListBx.ValueMember = null;
 
             linkComboBox.DataSource = siteHistory;
             linkComboBox.ValueMember = "Url";
 
+            searchHistoryListBx.DataSource = siteHistory;
+            searchHistoryListBx.ValueMember = "Url";
+
             linkComboBox.SelectedIndex = -1;
+
+            saveToHistory();
         }
 
         private void loadHistory() 
@@ -121,7 +134,7 @@ namespace WebBrowser
                 siteHistory.Add(site);
             }
             reader.Close();
-            updateAddressBar();
+            updateHistoryData();
         }
 
         private void historialToolStripMenuItem_Click(object sender, EventArgs e)
@@ -137,6 +150,16 @@ namespace WebBrowser
             searchHistoryListBx.ValueMember = "Url";
 
             searchHistoryListBx.Show();
+            deleteFromHistory.Show();
+        }
+
+        private void deleteFromHistory_Click(object sender, EventArgs e)
+        {
+            foreach (Sites site in searchHistoryListBx.CheckedItems) 
+            {
+                siteHistory.RemoveAll(s => s.Url.Equals(site.Url));
+            }
+            updateHistoryData();
         }
     }
 }

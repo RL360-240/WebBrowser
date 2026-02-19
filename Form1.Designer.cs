@@ -37,7 +37,8 @@
             this.linkComboBox = new System.Windows.Forms.ComboBox();
             this.searchButton = new System.Windows.Forms.Button();
             this.webWindow = new Microsoft.Web.WebView2.WinForms.WebView2();
-            this.searchHistoryListBx = new System.Windows.Forms.ListBox();
+            this.deleteFromHistory = new System.Windows.Forms.Button();
+            this.searchHistoryListBx = new System.Windows.Forms.CheckedListBox();
             this.webControls.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.webWindow)).BeginInit();
             this.SuspendLayout();
@@ -124,14 +125,23 @@
             this.webWindow.TabIndex = 7;
             this.webWindow.ZoomFactor = 1D;
             // 
+            // deleteFromHistory
+            // 
+            this.deleteFromHistory.Location = new System.Drawing.Point(833, 640);
+            this.deleteFromHistory.Name = "deleteFromHistory";
+            this.deleteFromHistory.Size = new System.Drawing.Size(75, 23);
+            this.deleteFromHistory.TabIndex = 10;
+            this.deleteFromHistory.Text = "Eliminar";
+            this.deleteFromHistory.UseVisualStyleBackColor = true;
+            this.deleteFromHistory.Click += new System.EventHandler(this.deleteFromHistory_Click);
+            // 
             // searchHistoryListBx
             // 
             this.searchHistoryListBx.FormattingEnabled = true;
-            this.searchHistoryListBx.ItemHeight = 15;
-            this.searchHistoryListBx.Location = new System.Drawing.Point(12, 30);
+            this.searchHistoryListBx.Location = new System.Drawing.Point(379, 30);
             this.searchHistoryListBx.Name = "searchHistoryListBx";
-            this.searchHistoryListBx.Size = new System.Drawing.Size(274, 349);
-            this.searchHistoryListBx.TabIndex = 9;
+            this.searchHistoryListBx.Size = new System.Drawing.Size(529, 604);
+            this.searchHistoryListBx.TabIndex = 11;
             // 
             // WebBrowser
             // 
@@ -139,6 +149,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1262, 673);
             this.Controls.Add(this.searchHistoryListBx);
+            this.Controls.Add(this.deleteFromHistory);
             this.Controls.Add(this.webWindow);
             this.Controls.Add(this.linkComboBox);
             this.Controls.Add(this.searchButton);
@@ -165,7 +176,8 @@
         private System.Windows.Forms.ToolStripMenuItem adelanteToolStripMenuItem;
         private Microsoft.Web.WebView2.WinForms.WebView2 webWindow;
         private System.Windows.Forms.ToolStripMenuItem historialToolStripMenuItem;
-        private System.Windows.Forms.ListBox searchHistoryListBx;
+        private System.Windows.Forms.Button deleteFromHistory;
+        private System.Windows.Forms.CheckedListBox searchHistoryListBx;
     }
 }
 
