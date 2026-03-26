@@ -18,7 +18,9 @@ namespace WebBrowser
         public WebBrowser()
         {
             InitializeComponent();
-            loadHistory();
+            
+            siteHistory = SitesSave.getSites();
+            updateHistoryData();
             searchHistoryListBx.Hide();
             deleteFromHistory.Hide();
         }
@@ -47,7 +49,7 @@ namespace WebBrowser
                     preExistingSiteLog.LastVisit = DateTime.Now;
                 }
             }
-            saveToHistory();
+            SitesSave.setSites(siteHistory);
             updateHistoryData();
         }
 
@@ -78,25 +80,6 @@ namespace WebBrowser
             linkComboBox.Width = searchButton.Left - linkComboBox.Left;
         }
 
-        private void saveToHistory() {
-            FileStream stream = new FileStream("C:\\Users\\user\\Desktop\\ProgamIII\\WebBrowser\\History.txt", FileMode.Create
-                , FileAccess.Write);
-            StreamWriter writer = new StreamWriter(stream);
-
-
-
-            foreach(Sites s in siteHistory)
-            {
-                string siteSaveformat = String.Format("{0};{1};{2}",
-                    s.Url,
-                    Convert.ToString(s.CallAmount),
-                    Convert.ToString(s.LastVisit));
-
-                writer.WriteLine(siteSaveformat);
-            }
-            writer.Close();
-        }
-
         private void updateHistoryData() 
         {
             siteHistory.Sort((s1, s2) => s2.LastVisit.CompareTo(s1.LastVisit));
@@ -113,28 +96,6 @@ namespace WebBrowser
             searchHistoryListBx.ValueMember = "Url";
 
             linkComboBox.SelectedIndex = -1;
-
-            saveToHistory();
-        }
-
-        private void loadHistory() 
-        {
-            FileStream stream = new FileStream("C:\\Users\\user\\Desktop\\ProgamIII\\WebBrowser\\History.txt", FileMode.Open, FileAccess.Read);
-            StreamReader reader = new StreamReader(stream);
-
-            while (reader.Peek() > -1)
-            {
-                string[] line = reader.ReadLine().Split(';');
-                Sites site = new Sites(
-                    line[0],
-                    Convert.ToInt32(line[1]),
-                    Convert.ToDateTime(line[2])
-                    );
-
-                siteHistory.Add(site);
-            }
-            reader.Close();
-            updateHistoryData();
         }
 
         private void historialToolStripMenuItem_Click(object sender, EventArgs e)
@@ -159,6 +120,7 @@ namespace WebBrowser
             {
                 siteHistory.RemoveAll(s => s.Url.Equals(site.Url));
             }
+            SitesSave.setSites(siteHistory);
             updateHistoryData();
         }
     }
