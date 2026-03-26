@@ -88,9 +88,13 @@ namespace WebBrowser
             linkComboBox.ValueMember = null;
             searchHistoryListBx.DataSource = null;
             searchHistoryListBx.ValueMember = null;
-
-            linkComboBox.DataSource = siteHistory;
-            linkComboBox.ValueMember = "Url";
+            
+            if (siteHistory != null) 
+            {
+                linkComboBox.DataSource = siteHistory;
+                linkComboBox.ValueMember = "Url";
+            }
+            
 
             searchHistoryListBx.DataSource = siteHistory;
             searchHistoryListBx.ValueMember = "Url";
